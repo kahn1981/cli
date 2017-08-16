@@ -188,6 +188,10 @@
     "translation": ""
   },
   {
+    "id": "**EXPERIMENTAL** List droplets of an app",
+    "translation": ""
+  },
+  {
     "id": "**EXPERIMENTAL** Show the type of health check performed on an app",
     "translation": ""
   },
@@ -1741,6 +1745,10 @@
   },
   {
     "id": "CF_NAME v3-get-health-check APP_NAME",
+    "translation": ""
+  },
+  {
+    "id": "CF_NAME v3-list-droplets APP_NAME",
     "translation": ""
   },
   {
@@ -3956,6 +3964,10 @@
     "translation": "Listing Installed Plugins..."
   },
   {
+    "id": "Listing droplets of app {{.AppName}} in org {{.CurrentOrg}} / space {{.CurrentSpace}} as {{.CurrentUser}}...",
+    "translation": ""
+  },
+  {
     "id": "Listing installed plugins...",
     "translation": ""
   },
@@ -4146,6 +4158,10 @@
   {
     "id": "No doppler loggregator endpoint found. Cannot retrieve logs.",
     "translation": "No doppler loggregator endpoint found. Cannot retrieve logs."
+  },
+  {
+    "id": "No droplets found",
+    "translation": ""
   },
   {
     "id": "No events for app {{.AppName}}",
@@ -6845,6 +6861,10 @@
   },
   {
     "id": "create-isolation-segment",
+    "translation": ""
+  },
+  {
+    "id": "created",
     "translation": ""
   },
   {
