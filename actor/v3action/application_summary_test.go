@@ -69,7 +69,7 @@ var _ = Describe("Application Summary Actions", func() {
 
 			Context("when app has droplet", func() {
 				BeforeEach(func() {
-					fakeCloudControllerClient.GetApplicationDropletsReturns(
+					fakeCloudControllerClient.GetDropletsReturns(
 						[]ccv3.Droplet{
 							{
 								Stack: "some-stack",
@@ -130,13 +130,12 @@ var _ = Describe("Application Summary Actions", func() {
 					query := fakeCloudControllerClient.GetApplicationsArgsForCall(0)
 					Expect(query).To(Equal(expectedQuery))
 
-					Expect(fakeCloudControllerClient.GetApplicationDropletsCallCount()).To(Equal(1))
-					appGUID, urlValues := fakeCloudControllerClient.GetApplicationDropletsArgsForCall(0)
-					Expect(appGUID).To(Equal("some-app-guid"))
-					Expect(urlValues).To(Equal(url.Values{"current": []string{"true"}}))
+					Expect(fakeCloudControllerClient.GetDropletsCallCount()).To(Equal(1))
+					urlValues := fakeCloudControllerClient.GetDropletsArgsForCall(0)
+					Expect(urlValues).To(Equal(url.Values{"current": []string{"true"}, "app_guids": []string{"some-app-guid"}}))
 
 					Expect(fakeCloudControllerClient.GetApplicationProcessesCallCount()).To(Equal(1))
-					appGUID = fakeCloudControllerClient.GetApplicationProcessesArgsForCall(0)
+					appGUID := fakeCloudControllerClient.GetApplicationProcessesArgsForCall(0)
 					Expect(appGUID).To(Equal("some-app-guid"))
 
 					Expect(fakeCloudControllerClient.GetProcessInstancesCallCount()).To(Equal(1))
@@ -149,7 +148,7 @@ var _ = Describe("Application Summary Actions", func() {
 
 					BeforeEach(func() {
 						expectedErr = errors.New("some error")
-						fakeCloudControllerClient.GetApplicationDropletsReturns(
+						fakeCloudControllerClient.GetDropletsReturns(
 							[]ccv3.Droplet{},
 							ccv3.Warnings{"some-droplet-warning"},
 							expectedErr,
@@ -166,7 +165,7 @@ var _ = Describe("Application Summary Actions", func() {
 
 			Context("when app does not have current droplet", func() {
 				BeforeEach(func() {
-					fakeCloudControllerClient.GetApplicationDropletsReturns(
+					fakeCloudControllerClient.GetDropletsReturns(
 						[]ccv3.Droplet{},
 						ccv3.Warnings{"some-droplet-warning"},
 						nil,
@@ -210,13 +209,12 @@ var _ = Describe("Application Summary Actions", func() {
 					query := fakeCloudControllerClient.GetApplicationsArgsForCall(0)
 					Expect(query).To(Equal(expectedQuery))
 
-					Expect(fakeCloudControllerClient.GetApplicationDropletsCallCount()).To(Equal(1))
-					appGUID, urlValues := fakeCloudControllerClient.GetApplicationDropletsArgsForCall(0)
-					Expect(appGUID).To(Equal("some-app-guid"))
-					Expect(urlValues).To(Equal(url.Values{"current": []string{"true"}}))
+					Expect(fakeCloudControllerClient.GetDropletsCallCount()).To(Equal(1))
+					urlValues := fakeCloudControllerClient.GetDropletsArgsForCall(0)
+					Expect(urlValues).To(Equal(url.Values{"current": []string{"true"}, "app_guids": []string{"some-app-guid"}}))
 
 					Expect(fakeCloudControllerClient.GetApplicationProcessesCallCount()).To(Equal(1))
-					appGUID = fakeCloudControllerClient.GetApplicationProcessesArgsForCall(0)
+					appGUID := fakeCloudControllerClient.GetApplicationProcessesArgsForCall(0)
 					Expect(appGUID).To(Equal("some-app-guid"))
 
 					Expect(fakeCloudControllerClient.GetProcessInstancesCallCount()).To(Equal(1))
@@ -289,7 +287,7 @@ var _ = Describe("Application Summary Actions", func() {
 					nil,
 				)
 
-				fakeCloudControllerClient.GetApplicationDropletsReturns(
+				fakeCloudControllerClient.GetDropletsReturns(
 					[]ccv3.Droplet{
 						{
 							Stack: "some-stack",

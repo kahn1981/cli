@@ -29,11 +29,11 @@ type DropletBuildpack struct {
 	DetectOutput string `json:"detect_output"`
 }
 
-// GetApplicationDroplets returns the Droplets for a given app
-func (client *Client) GetApplicationDroplets(appGUID string, query url.Values) ([]Droplet, Warnings, error) {
+// GetDroplets returns all the Droplets for a list of comma-delimited app
+// guids which are provided as URL query values.
+func (client *Client) GetDroplets(query url.Values) ([]Droplet, Warnings, error) {
 	request, err := client.newHTTPRequest(requestOptions{
-		RequestName: internal.GetAppDroplets,
-		URIParams:   map[string]string{"app_guid": appGUID},
+		RequestName: internal.GetDropletsRequest,
 		Query:       query,
 	})
 	if err != nil {

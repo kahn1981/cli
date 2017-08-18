@@ -97,6 +97,9 @@ func SetupV3Response() {
 			"apps": {
 				"href": "SERVER_URL/v3/apps"
 			},
+			"droplets": {
+				"href": "SERVER_URL/v3/droplets"
+			},
 			"tasks": {
 				"href": "SERVER_URL/v3/tasks"
 			},

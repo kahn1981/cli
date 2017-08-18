@@ -25,9 +25,8 @@ func (actor Actor) GetApplicationSummaryByNameAndSpace(appName string,
 	}
 
 	var droplet Droplet
-	ccv3Droplets, warnings, err := actor.CloudControllerClient.GetApplicationDroplets(
-		app.GUID,
-		url.Values{"current": []string{"true"}},
+	ccv3Droplets, warnings, err := actor.CloudControllerClient.GetDroplets(
+		url.Values{"current": []string{"true"}, "app_guids": []string{app.GUID}},
 	)
 	allWarnings = append(allWarnings, Warnings(warnings)...)
 	if err != nil {

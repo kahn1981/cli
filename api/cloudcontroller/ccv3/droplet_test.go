@@ -19,13 +19,13 @@ var _ = Describe("Droplet", func() {
 		client = NewTestClient()
 	})
 
-	Describe("GetApplicationDroplets", func() {
+	Describe("GetDroplets", func() {
 		Context("when the application exists", func() {
 			BeforeEach(func() {
 				response1 := fmt.Sprintf(`{
 					"pagination": {
 						"next": {
-							"href": "%s/v3/apps/some-app-guid/droplets?current=true&per_page=2&page=2"
+							"href": "%s/v3/droplets?app_guids=some-app-guid&current=true&per_page=2&page=2"
 						}
 					},
 					"resources": [
@@ -73,20 +73,20 @@ var _ = Describe("Droplet", func() {
 				}`
 				server.AppendHandlers(
 					CombineHandlers(
-						VerifyRequest(http.MethodGet, "/v3/apps/some-app-guid/droplets", "current=true&per_page=2"),
+						VerifyRequest(http.MethodGet, "/v3/droplets", "app_guids=some-app-guid&current=true&per_page=2"),
 						RespondWith(http.StatusOK, response1, http.Header{"X-Cf-Warnings": {"warning-1"}}),
 					),
 				)
 				server.AppendHandlers(
 					CombineHandlers(
-						VerifyRequest(http.MethodGet, "/v3/apps/some-app-guid/droplets", "current=true&per_page=2&page=2"),
+						VerifyRequest(http.MethodGet, "/v3/droplets", "app_guids=some-app-guid&current=true&per_page=2&page=2"),
 						RespondWith(http.StatusOK, response2, http.Header{"X-Cf-Warnings": {"warning-2"}}),
 					),
 				)
 			})
 
 			It("returns the current droplet for the given app and all warnings", func() {
-				droplets, warnings, err := client.GetApplicationDroplets("some-app-guid", url.Values{"per_page": []string{"2"}, "current": []string{"true"}})
+				droplets, warnings, err := client.GetDroplets(url.Values{"app_guids": []string{"some-app-guid"}, "per_page": []string{"2"}, "current": []string{"true"}})
 				Expect(err).ToNot(HaveOccurred())
 				Expect(droplets).To(HaveLen(3))
 
@@ -143,14 +143,14 @@ var _ = Describe("Droplet", func() {
 				}`
 				server.AppendHandlers(
 					CombineHandlers(
-						VerifyRequest(http.MethodGet, "/v3/apps/some-app-guid/droplets"),
+						VerifyRequest(http.MethodGet, "/v3/droplets"),
 						RespondWith(http.StatusNotFound, response),
 					),
 				)
 			})
 
 			It("returns the error", func() {
-				_, _, err := client.GetApplicationDroplets("some-app-guid", url.Values{})
+				_, _, err := client.GetDroplets(url.Values{"app_guids": []string{"some-app-guid"}})
 				Expect(err).To(MatchError(ccerror.ApplicationNotFoundError{}))
 			})
 		})

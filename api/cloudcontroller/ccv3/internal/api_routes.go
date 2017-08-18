@@ -15,12 +15,12 @@ const (
 	DeleteApplicationRequest                              = "DeleteApplication"
 	DeleteIsolationSegmentRelationshipOrganizationRequest = "DeleteIsolationSegmentRelationshipOrganization"
 	DeleteIsolationSegmentRequest                         = "DeleteIsolationSegment"
-	GetAppDroplets                                        = "GetAppDroplets"
 	GetAppProcessesRequest                                = "GetAppProcesses"
 	GetAppTasksRequest                                    = "GetAppTasks"
 	GetApplicationProcessByTypeRequest                    = "GetApplicationProcessByType"
 	GetAppsRequest                                        = "GetApps"
 	GetBuildRequest                                       = "GetBuild"
+	GetDropletsRequest                                    = "GetDroplets"
 	GetProcessInstancesRequest                            = "GetProcessInstances"
 	GetIsolationSegmentOrganizationsRequest               = "GetIsolationSegmentRelationshipOrganizations"
 	GetIsolationSegmentRequest                            = "GetIsolationSegment"
@@ -48,6 +48,7 @@ const (
 const (
 	AppsResource              = "apps"
 	BuildsResource            = "builds"
+	DropletsResource          = "droplets"
 	IsolationSegmentsResource = "isolation_segments"
 	OrgsResource              = "organizations"
 	PackagesResource          = "packages"
@@ -59,6 +60,7 @@ const (
 // APIRoutes is a list of routes used by the router to construct request URLs.
 var APIRoutes = []Route{
 	{Path: "/", Method: http.MethodGet, Name: GetAppsRequest, Resource: AppsResource},
+	{Path: "/", Method: http.MethodGet, Name: GetDropletsRequest, Resource: DropletsResource},
 	{Path: "/", Method: http.MethodGet, Name: GetIsolationSegmentsRequest, Resource: IsolationSegmentsResource},
 	{Path: "/", Method: http.MethodGet, Name: GetOrgsRequest, Resource: OrgsResource},
 	{Path: "/", Method: http.MethodPost, Name: PostApplicationRequest, Resource: AppsResource},
@@ -75,7 +77,6 @@ var APIRoutes = []Route{
 	{Path: "/:app_guid/actions/start", Method: http.MethodPost, Name: PostApplicationStartRequest, Resource: AppsResource},
 	{Path: "/:app_guid/actions/stop", Method: http.MethodPost, Name: PostApplicationStopRequest, Resource: AppsResource},
 	{Path: "/:task_guid/cancel", Method: http.MethodPut, Name: PutTaskCancelRequest, Resource: TasksResource},
-	{Path: "/:app_guid/droplets", Method: http.MethodGet, Name: GetAppDroplets, Resource: AppsResource},
 	{Path: "/:isolation_segment_guid/organizations", Method: http.MethodGet, Name: GetIsolationSegmentOrganizationsRequest, Resource: IsolationSegmentsResource},
 	{Path: "/:app_guid/processes", Method: http.MethodGet, Name: GetAppProcessesRequest, Resource: AppsResource},
 	{Path: "/:app_guid/processes/:type", Method: http.MethodGet, Name: GetApplicationProcessByTypeRequest, Resource: AppsResource},

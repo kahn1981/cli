@@ -170,22 +170,6 @@ type FakeCloudControllerClient struct {
 		result2 ccv3.Warnings
 		result3 error
 	}
-	GetApplicationDropletsStub        func(appGUID string, query url.Values) ([]ccv3.Droplet, ccv3.Warnings, error)
-	getApplicationDropletsMutex       sync.RWMutex
-	getApplicationDropletsArgsForCall []struct {
-		appGUID string
-		query   url.Values
-	}
-	getApplicationDropletsReturns struct {
-		result1 []ccv3.Droplet
-		result2 ccv3.Warnings
-		result3 error
-	}
-	getApplicationDropletsReturnsOnCall map[int]struct {
-		result1 []ccv3.Droplet
-		result2 ccv3.Warnings
-		result3 error
-	}
 	GetApplicationProcessByTypeStub        func(appGUID string, processType string) (ccv3.Process, ccv3.Warnings, error)
 	getApplicationProcessByTypeMutex       sync.RWMutex
 	getApplicationProcessByTypeArgsForCall []struct {
@@ -260,6 +244,21 @@ type FakeCloudControllerClient struct {
 	}
 	getBuildReturnsOnCall map[int]struct {
 		result1 ccv3.Build
+		result2 ccv3.Warnings
+		result3 error
+	}
+	GetDropletsStub        func(query url.Values) ([]ccv3.Droplet, ccv3.Warnings, error)
+	getDropletsMutex       sync.RWMutex
+	getDropletsArgsForCall []struct {
+		query url.Values
+	}
+	getDropletsReturns struct {
+		result1 []ccv3.Droplet
+		result2 ccv3.Warnings
+		result3 error
+	}
+	getDropletsReturnsOnCall map[int]struct {
+		result1 []ccv3.Droplet
 		result2 ccv3.Warnings
 		result3 error
 	}
@@ -1117,61 +1116,6 @@ func (fake *FakeCloudControllerClient) EntitleIsolationSegmentToOrganizationsRet
 	}{result1, result2, result3}
 }
 
-func (fake *FakeCloudControllerClient) GetApplicationDroplets(appGUID string, query url.Values) ([]ccv3.Droplet, ccv3.Warnings, error) {
-	fake.getApplicationDropletsMutex.Lock()
-	ret, specificReturn := fake.getApplicationDropletsReturnsOnCall[len(fake.getApplicationDropletsArgsForCall)]
-	fake.getApplicationDropletsArgsForCall = append(fake.getApplicationDropletsArgsForCall, struct {
-		appGUID string
-		query   url.Values
-	}{appGUID, query})
-	fake.recordInvocation("GetApplicationDroplets", []interface{}{appGUID, query})
-	fake.getApplicationDropletsMutex.Unlock()
-	if fake.GetApplicationDropletsStub != nil {
-		return fake.GetApplicationDropletsStub(appGUID, query)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2, ret.result3
-	}
-	return fake.getApplicationDropletsReturns.result1, fake.getApplicationDropletsReturns.result2, fake.getApplicationDropletsReturns.result3
-}
-
-func (fake *FakeCloudControllerClient) GetApplicationDropletsCallCount() int {
-	fake.getApplicationDropletsMutex.RLock()
-	defer fake.getApplicationDropletsMutex.RUnlock()
-	return len(fake.getApplicationDropletsArgsForCall)
-}
-
-func (fake *FakeCloudControllerClient) GetApplicationDropletsArgsForCall(i int) (string, url.Values) {
-	fake.getApplicationDropletsMutex.RLock()
-	defer fake.getApplicationDropletsMutex.RUnlock()
-	return fake.getApplicationDropletsArgsForCall[i].appGUID, fake.getApplicationDropletsArgsForCall[i].query
-}
-
-func (fake *FakeCloudControllerClient) GetApplicationDropletsReturns(result1 []ccv3.Droplet, result2 ccv3.Warnings, result3 error) {
-	fake.GetApplicationDropletsStub = nil
-	fake.getApplicationDropletsReturns = struct {
-		result1 []ccv3.Droplet
-		result2 ccv3.Warnings
-		result3 error
-	}{result1, result2, result3}
-}
-
-func (fake *FakeCloudControllerClient) GetApplicationDropletsReturnsOnCall(i int, result1 []ccv3.Droplet, result2 ccv3.Warnings, result3 error) {
-	fake.GetApplicationDropletsStub = nil
-	if fake.getApplicationDropletsReturnsOnCall == nil {
-		fake.getApplicationDropletsReturnsOnCall = make(map[int]struct {
-			result1 []ccv3.Droplet
-			result2 ccv3.Warnings
-			result3 error
-		})
-	}
-	fake.getApplicationDropletsReturnsOnCall[i] = struct {
-		result1 []ccv3.Droplet
-		result2 ccv3.Warnings
-		result3 error
-	}{result1, result2, result3}
-}
-
 func (fake *FakeCloudControllerClient) GetApplicationProcessByType(appGUID string, processType string) (ccv3.Process, ccv3.Warnings, error) {
 	fake.getApplicationProcessByTypeMutex.Lock()
 	ret, specificReturn := fake.getApplicationProcessByTypeReturnsOnCall[len(fake.getApplicationProcessByTypeArgsForCall)]
@@ -1439,6 +1383,60 @@ func (fake *FakeCloudControllerClient) GetBuildReturnsOnCall(i int, result1 ccv3
 	}
 	fake.getBuildReturnsOnCall[i] = struct {
 		result1 ccv3.Build
+		result2 ccv3.Warnings
+		result3 error
+	}{result1, result2, result3}
+}
+
+func (fake *FakeCloudControllerClient) GetDroplets(query url.Values) ([]ccv3.Droplet, ccv3.Warnings, error) {
+	fake.getDropletsMutex.Lock()
+	ret, specificReturn := fake.getDropletsReturnsOnCall[len(fake.getDropletsArgsForCall)]
+	fake.getDropletsArgsForCall = append(fake.getDropletsArgsForCall, struct {
+		query url.Values
+	}{query})
+	fake.recordInvocation("GetDroplets", []interface{}{query})
+	fake.getDropletsMutex.Unlock()
+	if fake.GetDropletsStub != nil {
+		return fake.GetDropletsStub(query)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2, ret.result3
+	}
+	return fake.getDropletsReturns.result1, fake.getDropletsReturns.result2, fake.getDropletsReturns.result3
+}
+
+func (fake *FakeCloudControllerClient) GetDropletsCallCount() int {
+	fake.getDropletsMutex.RLock()
+	defer fake.getDropletsMutex.RUnlock()
+	return len(fake.getDropletsArgsForCall)
+}
+
+func (fake *FakeCloudControllerClient) GetDropletsArgsForCall(i int) url.Values {
+	fake.getDropletsMutex.RLock()
+	defer fake.getDropletsMutex.RUnlock()
+	return fake.getDropletsArgsForCall[i].query
+}
+
+func (fake *FakeCloudControllerClient) GetDropletsReturns(result1 []ccv3.Droplet, result2 ccv3.Warnings, result3 error) {
+	fake.GetDropletsStub = nil
+	fake.getDropletsReturns = struct {
+		result1 []ccv3.Droplet
+		result2 ccv3.Warnings
+		result3 error
+	}{result1, result2, result3}
+}
+
+func (fake *FakeCloudControllerClient) GetDropletsReturnsOnCall(i int, result1 []ccv3.Droplet, result2 ccv3.Warnings, result3 error) {
+	fake.GetDropletsStub = nil
+	if fake.getDropletsReturnsOnCall == nil {
+		fake.getDropletsReturnsOnCall = make(map[int]struct {
+			result1 []ccv3.Droplet
+			result2 ccv3.Warnings
+			result3 error
+		})
+	}
+	fake.getDropletsReturnsOnCall[i] = struct {
+		result1 []ccv3.Droplet
 		result2 ccv3.Warnings
 		result3 error
 	}{result1, result2, result3}
@@ -2432,8 +2430,6 @@ func (fake *FakeCloudControllerClient) Invocations() map[string][][]interface{} 
 	defer fake.deleteApplicationProcessInstanceMutex.RUnlock()
 	fake.entitleIsolationSegmentToOrganizationsMutex.RLock()
 	defer fake.entitleIsolationSegmentToOrganizationsMutex.RUnlock()
-	fake.getApplicationDropletsMutex.RLock()
-	defer fake.getApplicationDropletsMutex.RUnlock()
 	fake.getApplicationProcessByTypeMutex.RLock()
 	defer fake.getApplicationProcessByTypeMutex.RUnlock()
 	fake.getApplicationProcessesMutex.RLock()
@@ -2444,6 +2440,8 @@ func (fake *FakeCloudControllerClient) Invocations() map[string][][]interface{} 
 	defer fake.getApplicationsMutex.RUnlock()
 	fake.getBuildMutex.RLock()
 	defer fake.getBuildMutex.RUnlock()
+	fake.getDropletsMutex.RLock()
+	defer fake.getDropletsMutex.RUnlock()
 	fake.getIsolationSegmentMutex.RLock()
 	defer fake.getIsolationSegmentMutex.RUnlock()
 	fake.getIsolationSegmentOrganizationsByIsolationSegmentMutex.RLock()

@@ -138,7 +138,7 @@ var _ = Describe("Droplet Actions", func() {
 					nil,
 				)
 
-				fakeCloudControllerClient.GetApplicationDropletsReturns(
+				fakeCloudControllerClient.GetDropletsReturns(
 					[]ccv3.Droplet{
 						{
 							GUID:      "some-droplet-guid-1",
@@ -194,13 +194,12 @@ var _ = Describe("Droplet Actions", func() {
 
 				Expect(fakeCloudControllerClient.GetApplicationsCallCount()).To(Equal(1))
 				queryURL := fakeCloudControllerClient.GetApplicationsArgsForCall(0)
-				query := url.Values{"names": []string{"some-app-name"}, "space_guids": []string{"some-space-guid"}}
-				Expect(queryURL).To(Equal(query))
+				appsQuery := url.Values{"names": []string{"some-app-name"}, "space_guids": []string{"some-space-guid"}}
+				Expect(queryURL).To(Equal(appsQuery))
 
-				Expect(fakeCloudControllerClient.GetApplicationDropletsCallCount()).To(Equal(1))
-				appGUID, query := fakeCloudControllerClient.GetApplicationDropletsArgsForCall(0)
-				Expect(appGUID).To(Equal("some-app-guid"))
-				Expect(query).To(Equal(url.Values{}))
+				Expect(fakeCloudControllerClient.GetDropletsCallCount()).To(Equal(1))
+				dropletsQuery := fakeCloudControllerClient.GetDropletsArgsForCall(0)
+				Expect(dropletsQuery).To(Equal(url.Values{"app_guids": []string{"some-app-guid"}}))
 			})
 		})
 
@@ -239,7 +238,7 @@ var _ = Describe("Droplet Actions", func() {
 					nil,
 				)
 
-				fakeCloudControllerClient.GetApplicationDropletsReturns(
+				fakeCloudControllerClient.GetDropletsReturns(
 					[]ccv3.Droplet{},
 					ccv3.Warnings{"get-application-droplets-warning"},
 					expectedErr,
