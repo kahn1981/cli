@@ -6,6 +6,7 @@ import (
 
 	"code.cloudfoundry.org/cli/api/cloudcontroller/ccerror"
 	"code.cloudfoundry.org/cli/api/cloudcontroller/ccv2"
+	"code.cloudfoundry.org/cli/types"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -89,6 +90,32 @@ func (actor Actor) BindRouteToApplication(routeGUID string, appGUID string) (War
 func (actor Actor) CreateRoute(route Route, generatePort bool) (Route, Warnings, error) {
 	returnedRoute, warnings, err := actor.CloudControllerClient.CreateRoute(ActorToCCRoute(route), generatePort)
 	return CCToActorRoute(returnedRoute, route.Domain), Warnings(warnings), err
+}
+
+func (actor Actor) CreateRouteWithExistenceCheck(orgGUID string, spaceName string, host string, path string, port types.NullInt, generatePort bool) (Route, Warnings, error) {
+	// 1. convert params to Route
+	// a) get Space GUID
+	// b) get Domain GUID
+	//
+	// 2. adapt the following code
+	// a) check whether route exists -- whether or not it is before 2.53.0 determines which endpoint we hit
+	// routeAlreadyExists := true
+	// if _, ok := err.(v2action.RouteNotFoundError); ok {
+	// 	routeAlreadyExists = false
+	// } else if err != nil {
+	// 	return Warnings(warnings), err
+	// }
+
+	// if !routeAlreadyExists {
+	// 	var createRouteWarning v2action.Warnings
+	// 	spaceRoute, createRouteWarning, err = actor.V2Actor.CreateRoute(defaultRoute, false)
+	// 	warnings = append(warnings, createRouteWarning...)
+	// 	if err != nil {
+	// 		return Warnings(warnings), err
+	// 	}
+	// }
+	// return actor.CreateRoute(route, generatePort)
+	return Route{}, nil, nil
 }
 
 // GetOrphanedRoutesBySpace returns a list of orphaned routes associated with
