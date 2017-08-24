@@ -8,6 +8,8 @@ import (
 	"code.cloudfoundry.org/cli/api/uaa/internal"
 )
 
+//go:generate counterfeiter . UAAEndpointStore
+
 type UAAEndpointStore interface {
 	SetUAAEndpoint(uaaEndpoint string)
 }
@@ -59,10 +61,14 @@ func (client *Client) SetupResources(store UAAEndpointStore, bootstrapURL string
 		return err
 	}
 
-	//store uaa endpoint
+	UAALink := info.Links.UAA
+	if UAALink == "" {
+		UAALink = bootstrapURL
+	}
+	store.SetUAAEndpoint(UAALink)
 
 	resources := map[string]string{
-		"uaa": info.Links.UAA,
+		"uaa": UAALink,
 		"authorization_endpoint": bootstrapURL,
 	}
 
