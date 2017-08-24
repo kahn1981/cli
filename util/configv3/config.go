@@ -667,6 +667,11 @@ func (config *Config) SetRefreshToken(refreshToken string) {
 	config.ConfigFile.RefreshToken = refreshToken
 }
 
+// SetRefreshToken sets the current refresh token
+// func (config *Config) SetRefreshToken(refreshToken string) {
+// 	config.ConfigFile.RefreshToken = refreshToken
+// }
+
 // UnsetSpaceInformation resets the space values to default
 func (config *Config) UnsetSpaceInformation() {
 	config.SetSpaceInformation("", "", false)
